@@ -20,6 +20,10 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
+          <!-- Alert -->
+          <%- include('../../partials/message.ejs') %>
+          <!-- End of Alert -->
+
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Category</h1>
           <!-- End of Heading -->
@@ -66,9 +70,24 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <%- include('add_category.ejs') %>
+  <%- include('edit_category.ejs') %>
+  <!-- End of Modal -->
+
   <!-- JavaScript File -->
   <%- include('../../partials/js.ejs') %>
   <!-- End of JavaScript File -->
+
+  <script>
+    $('#dataTable').on('click', '.button-update', function() {
+      var id = $(this).data('id');
+      var name = $(this).data('name');
+
+      $('.id').val(id);
+      $('#edit_name').val(name);
+    });
+  </script>
 
 </body>
 

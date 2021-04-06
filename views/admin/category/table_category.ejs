@@ -1,7 +1,9 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-category">
+        <i class="fas fa-plus"></i> Add Category
+      </button>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -13,6 +15,20 @@
               <th>Action</th>
             </tr>
           </thead>
+          <tbody>
+            <% for(let i = 0; i < category.length; i++) { %>
+              <tr>
+                <td><%= i + 1 %></td>
+                <td><%= category[i].name %></td>
+                <td>
+                  <form action="/admin/category/<%= category[i]._id %>?_method=DELETE" method="post">
+                    <button type="button" class="btn btn-warning btn-sm button-update" style="width: 80px;" data-toggle="modal" data-target="#edit-category" data-id="<%= category[i]._id %>" data-name="<%= category[i].name %>"><i class="fas fa-trash"></i> Edit</button>
+                    <button type="submit" class="btn btn-danger btn-sm" style="width: 80px;"><i class="fas fa-trash"></i> Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
         </table>
       </div>
     </div>
