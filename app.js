@@ -4,8 +4,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// import mongoose
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/myapp', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+})
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+// Router Admin
+const adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -22,6 +34,9 @@ app.use('/sb-admin-2', express.static(path.join(__dirname, 'node_modules/startbo
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// Admin
+app.use('/admin', adminRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

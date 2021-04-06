@@ -1,10 +1,10 @@
-<%- include('partials/header.ejs') %>
+<%- include('../../partials/header.ejs') %>
 
   <!-- Page Wrapper -->
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include('partials/sidebar.ejs') %>
+    <%- include('../../partials/sidebar.ejs') %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -14,14 +14,17 @@
       <div id="content">
 
         <!-- Topbar / Navbar -->
-        <%- include('partials/navbar.ejs') %>
+        <%- include('../../partials/navbar.ejs') %>
         <!-- End of Topbar / Navbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+          <h1 class="h3 mb-4 text-gray-800">Bank</h1>
+          <!-- End of Heading -->
+
+          <%- include('table_bank.ejs') %>
 
         </div>
         <!-- /.container-fluid -->
@@ -30,7 +33,7 @@
       <!-- End of Main Content -->
 
       <!-- Footer -->
-      <%- include('partials/footer.ejs') %>
+      <%- include('../../partials/footer.ejs') %>
       <!-- End of Footer -->
 
     </div>
@@ -64,7 +67,7 @@
   </div>
 
   <!-- JavaScript File -->
-  <%- include('partials/js.ejs') %>
+  <%- include('../../partials/js.ejs') %>
   <!-- End of JavaScript File -->
 
 </body>
