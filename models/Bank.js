@@ -1,15 +1,19 @@
 const mongoose = require("mongoose")
 
 const bankSchema = new mongoose.Schema({
-    nameBank: {
+    bank_name: {
         type: String,
         required: true
     },
-    nomorRekening: {
+    account_number: {
         type: String,
         required: true
     },
-    name: {
+    account_name: {
+        type: String,
+        required: true
+    },
+    image_url: {
         type: String,
         required: true
     }

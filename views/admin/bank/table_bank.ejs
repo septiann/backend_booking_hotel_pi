@@ -1,7 +1,9 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-bank">
+        <i class="fas fa-plus"></i> Tambah Bank
+      </button>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -9,12 +11,32 @@
           <thead>
             <tr>
               <th>No.</th>
-              <th>Bank Name</th>
-              <th>Account Number</th>
-              <th>Account Name</th>
-              <th>Action</th>
+              <th>Nama Bank</th>
+              <th>Nomor Rekening</th>
+              <th>Nama Pemilik Rekening</th>
+              <th>Logo</th>
+              <th>Aksi</th>
             </tr>
           </thead>
+          <tbody>
+            <% for(let i = 0; i < bank.length; i++) { %>
+              <tr>
+                <td class="align-middle"><%= i + 1 %>.</td>
+                <td class="align-middle"><%= bank[i].bank_name %></td>
+                <td class="align-middle"><%= bank[i].account_number %></td>
+                <td class="align-middle"><%= bank[i].account_name %></td>
+                <td>
+                  <img src="http://localhost:3000/<%= bank[i].image_url %>" alt="<%= bank[i].bank_name %>" width="70px">
+                </td>
+                <td class="align-middle">
+                  <form action="/admin/bank/<%= bank[i]._id %>?_method=DELETE" method="post">
+                    <button type="button" class="btn btn-warning btn-sm button-update" style="width: 80px;" data-toggle="modal" data-target="#edit-bank" data-id="<%= bank[i]._id %>" data-bankname="<%= bank[i].bank_name %>" data-accountnumber="<%= bank[i].account_number %>" data-accountname="<%= bank[i].account_name %>" data-imageurl="<%= bank[i].image_url %>"><i class="fas fa-trash"></i> Ubah</button>
+                    <button type="submit" class="btn btn-danger btn-sm" style="width: 80px;"><i class="fas fa-trash"></i> Hapus</button>
+                  </form>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
         </table>
       </div>
     </div>
