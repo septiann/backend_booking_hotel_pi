@@ -1,0 +1,40 @@
+<!-- DataTales Example -->
+<div class="tab-pane fade show active" id="show-item" role="tabpanel" aria-labelledby="home-tab">
+  <div class="card shadow mb-4 mt-2">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Nama Kategori</th>
+              <th>Harga</th>
+              <th>Kota</th>
+              <th>Negara</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i = 0; i < item.length; i++) { %>
+              <tr>
+                <td class="align-middle"><%= i + 1 %></td>
+                <td class="align-middle"><%= item[i].title %></td>
+                <td class="align-middle">Rp. <%= item[i].price %></td>
+                <td class="align-middle"><%= item[i].city %></td>
+                <td class="align-middle"><%= item[i].country %></td>
+                <td class="align-middle">
+                  <form action="/admin/item/<%= item[i]._id %>/delete?_method=DELETE" method="post">
+                    <a href="/admin/item/show-image/<%= item[i]._id %>" class="btn btn-info btn-sm" style="width: 90px;"><i class="fas fa-image"></i> Foto</a>
+                    <a href="/admin/item/<%= item[i]._id %>" class="btn btn-warning btn-sm" style="width: 90px;"><i class="fas fa-edit"></i> Ubah</a><br style="display: block; margin: 5px; content: '';">
+                    <button type="submit" class="btn btn-danger btn-sm" style="width: 90px;"><i class="fas fa-trash"></i> Hapus</button>
+                    <a href="#" class="btn btn-success btn-sm" style="width: 90px;"><i class="fas fa-plus"></i> Tambah</a>
+                  </form>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const { ObjectId } = mongoose.Schema
 
 const activitySchema = new mongoose.Schema({
     name: {
@@ -9,12 +10,16 @@ const activitySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imageUrl: {
+    image_url: {
         type: String,
         required: true
     },
-    isPopular: {
+    is_popular: {
         type: Boolean
+    },
+    item_id: {
+        type: ObjectId,
+        ref: 'Item'
     }
 })
 

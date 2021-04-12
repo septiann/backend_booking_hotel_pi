@@ -18,22 +18,26 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    isPopular: {
+    is_popular: {
         type: Boolean
     },
     description: {
         type: String,
         required: true
     },
-    imageId: [{
+    category_id: {
+        type: ObjectId,
+        ref: 'Category'
+    },
+    image_id: [{
         type: ObjectId,
         ref: 'Image'
     }],
-    featureId: [{
+    feature_id: [{
         type: ObjectId,
         ref: 'Feature'
     }],
-    activityId: [{
+    activity_id: [{
         type: ObjectId,
         ref: 'Activity'
     }]

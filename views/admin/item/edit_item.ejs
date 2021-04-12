@@ -1,0 +1,42 @@
+<div class="tab-pane show active" id="edit-item" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="card shadow mb-4 mt-2">
+      <div class="card-body">
+        <form action="/admin/item/<%= item.id %>?_method=PUT" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="name">Nama Item</label>
+            <input type="text" class="form-control" name="title" id="title" value="<%= item.title %>" required>
+          </div>
+          <div class="form-group">
+            <label for="price">Harga</label>
+            <input type="number" class="form-control" name="price" id="price" value="<%= item.price %>" required>
+          </div>
+          <div class="form-group">
+            <label for="city">Kota</label>
+            <input type="text" class="form-control" name="city" id="city" value="<%= item.city %>" required>
+          </div>
+          <div class="form-group">
+            <label for="category">Kategori</label>
+            <select class="form-control" name="category_id" id="category">
+              <option value="">--- Pilih Kategori ---</option>
+              <% for(let i = 0; i < category.length; i++) { var selected = (category[i]._id == item.category_id.id) ? "selected" : "" %>
+              <option value="<%= category[i]._id %>" <%= selected %> ><%= category[i].name %></option>
+              <% } %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="image">Gambar</label>
+            <input type="file" class="form-control-file" name="image" id="image" multiple><br>
+            <% for(let z = 0; z < item.image_id.length; z++) { %>
+              <img src="http://localhost:3000/<%= item.image_id[z].image_url %>" alt="<%= item.image_id[z]._id %>" width="150px">
+            <% } %>
+          </div>
+          <div class="form-group">
+            <label for="description">Deskripsi</label>
+            <textarea class="form-control" name="description" id="description"><%= item.description %></textarea>
+          </div>
+          <a href="/admin/item" class="btn btn-secondary">Kembali</a>
+          <button type="submit" class="btn btn-warning">Ubah</button>
+        </form>
+      </div>
+    </div>
+  </div>
