@@ -2,6 +2,8 @@ const Category = require('../models/Category')
 const Bank = require('../models/Bank')
 const Item = require('../models/Item')
 const Image = require('../models/Image')
+const Feature = require('../models/Feature')
+const Activity = require('../models/Activity')
 
 const fs = require('fs-extra')
 const path = require('path')
@@ -319,6 +321,106 @@ module.exports = {
         }
 
         res.redirect('/admin/item')
+    },
+    viewDetailItem: async (req, res) => {
+        const { item_id } = req.params
+        try {
+            const alertMessage = req.flash('alertMessage')
+            const alertStatus = req.flash('alertStatus')
+            const alert = { message: alertMessage, status: alertStatus }
+            const feature = await Feature.find({ item_id: item_id })
+
+            res.render('admin/item/detail_item/view_detail_item', {
+                title: 'InnCation | Detail Item',
+                alert,
+                item_id,
+                feature
+            })
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`)
+            req.flash('alertStatus', 'danger')
+        }
+
+        res.redirect(`/admin/item/show-detail-item/${item_id}`)
+    },
+    addFeature: async (req, res) => {
+        const { feature_name, qty, item_id } = req.body
+        try {
+            if(!req.file) {
+                req.flash('alertMessage', `Gambar tidak ditemukan. ${error.message}`)
+                req.flash('alertStatus', 'danger')
+            }
+
+            const feature = await Feature.create({
+                name: feature_name,
+                qty,
+                item_id,
+                image_url: `images/${req.file.filename}`
+            })
+
+            const item = await Item.findOne({ _id: item_id })
+
+            item.feature_id.push({ _id: feature._id })
+            await item.save()
+
+            req.flash('alertMessage', 'Berhasil menambah fitur.')
+            req.flash('alertStatus', 'success')
+        } catch (error) {
+            req.flash('alertMessage', `Gagal menambah fitur. ${error.message}`)
+            req.flash('alertStatus', 'danger')
+        }
+
+        res.redirect(`/admin/item/show-detail-item/${item_id}`)
+    },
+    editFeature: async (req, res) => {
+        const { id, feature_name, qty, item_id } = req.body
+        try {
+            const feature = await Feature.findOne({ _id: id })
+
+            feature.name = feature_name
+            feature.qty = qty
+
+            if(req.file !== undefined) {
+                await fs.unlink(path.join(`public/${feature.image_url}`))
+                feature.image_url = `images/${req.file.filename}`
+            }
+
+            await feature.save()
+
+            req.flash('alertMessage', 'Berhasil mengubah data fitur.')
+            req.flash('alertStatus', 'success')
+        } catch (error) {
+            req.flash('alertMessage', `Gagal mengubah data fitur. ${error.message}`)
+            req.flash('alertStatus', 'danger')
+        }
+
+        res.redirect(`/admin/item/show-detail-item/${item_id}`)
+    },
+    deleteFeature: async (req, res) => {
+        const { id, item_id } = req.params
+        console.log(id + ' ' + item_id)
+        try {
+            const feature = await Feature.findOne({ _id: id })
+            const item = await (await Item.findOne({ _id: item_id })).populate('feature_id')
+
+            for(let i = 0; i < item.feature_id.length; i++) {
+                if(item.feature_id[i]._id.toString() === feature._id.toString()) {
+                    item.feature_id.pull({ _id: feature._id })
+                    await item.save()
+                }
+            }
+            
+            await fs.unlink(path.join(`public/${feature.image_url}`))
+            await feature.remove()
+
+            req.flash('alertMessage', 'Berhasil menghapus data fitur.')
+            req.flash('alertStatus', 'success')
+        } catch (error) {
+            req.flash('alertMessage', `Gagal menghapus data fitur. ${error.message}`)
+            req.flash('alertStatus', 'danger')
+        }
+
+        res.redirect(`/admin/item/show-detail-item/${item_id}`)
     },
 
     // Booking

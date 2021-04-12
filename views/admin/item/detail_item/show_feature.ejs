@@ -1,0 +1,63 @@
+<!-- DataTales Example -->
+<div class="tab-pane fade show active" id="show-feature" role="tabpanel" aria-labelledby="home-tab">
+  <div class="card shadow mb-4 mt-2">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5">
+          <form action="/admin/item/add/feature" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="feature_name">Nama Fitur</label>
+                <input type="text" class="form-control" name="feature_name" id="feature_name" required>
+              </div>
+              <div class="form-group">
+                <label for="qty">Kuantitas</label>
+                <input type="number" class="form-control" name="qty" id="qty" required>
+              </div>
+              <div class="form-group">
+                <label for="feature_image">Gambar</label>
+                <input type="file" class="form-control-file" name="image" id="feature_image" required>
+              </div>
+              <hr>
+              <input type="hidden" name="item_id" value="<%= item_id %>">
+              <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-7">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Nama Fitur</th>
+                  <th>Kuantitas</th>
+                  <th>Gambar</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(let i = 0; i < feature.length; i++) { %>
+                  <tr>
+                    <td class="align-middle"><%= i + 1 %>.</td>
+                    <td class="align-middle"><%= feature[i].name %></td>
+                    <td class="align-middle"><%= feature[i].qty %></td>
+                    <td>
+                      <img src="http://localhost:3000/<%= feature[i].image_url %>" alt="<%= feature[i].name %>_<%= feature[i]._id %>" width="70px">
+                    </td>
+                    <td class="align-middle">
+                      <form action="/admin/item/<%= item_id %>/feature/<%= feature[i]._id %>?_method=DELETE" method="post">
+                        <button type="button" class="btn btn-warning btn-sm button-update" style="width: 80px;" data-toggle="modal" data-target="#edit-feature" data-id="<%= feature[i]._id %>" data-featurename="<%= feature[i].name %>" data-qty="<%= feature[i].qty %>" data-imageurl="<%= feature[i].image_url %>"><i class="fas fa-edit"></i> Ubah</button><br style="display: block; margin: 5px; content: '';">
+                        <button type="submit" class="btn btn-danger btn-sm" style="width: 80px;"><i class="fas fa-trash"></i> Hapus</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

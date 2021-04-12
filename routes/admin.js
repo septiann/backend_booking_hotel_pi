@@ -25,6 +25,11 @@ router.get('/item/:id', adminController.showEditItem)
 router.put('/item/:id', uploadMultiple, adminController.editItem)
 router.delete('/item/:id/delete', adminController.deleteItem)
 
+router.get('/item/show-detail-item/:item_id', adminController.viewDetailItem)
+router.post('/item/add/feature', upload, adminController.addFeature)
+router.put('/item/update/feature', upload, adminController.editFeature)
+router.delete('/item/:item_id/feature/:id', adminController.deleteFeature)
+
 // Booking
 router.get('/booking', adminController.viewBooking)
 
