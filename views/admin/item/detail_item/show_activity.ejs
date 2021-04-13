@@ -4,11 +4,11 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-5">
-            <form action="/admin/bank" method="post" enctype="multipart/form-data">
+            <form action="/admin/item/add/activity" method="post" enctype="multipart/form-data">
               <div class="modal-body">
                 <div class="form-group">
-                  <label for="name">Nama Aktifitas</label>
-                  <input type="text" class="form-control" name="name" id="name" required>
+                  <label for="activity_name">Nama Aktifitas</label>
+                  <input type="text" class="form-control" name="activity_name" id="activity_name" required>
                 </div>
                 <div class="form-group">
                   <label for="type">Tipe</label>
@@ -19,6 +19,7 @@
                   <input type="file" class="form-control-file" name="image" id="image" required>
                 </div>
                 <hr>
+                <input type="hidden" name="item_id" value="<%= item_id %>">
                 <button type="submit" class="btn btn-primary">Simpan</button>
               </div>
             </form>
@@ -36,7 +37,22 @@
                   </tr>
                 </thead>
                 <tbody>
-                  
+                  <% for(let i = 0; i < activity.length; i++) { %>
+                    <tr>
+                      <td class="align-middle"><%= i + 1 %>.</td>
+                      <td class="align-middle"><%= activity[i].name %></td>
+                      <td class="align-middle"><%= activity[i].type %></td>
+                      <td class="align-middle">
+                        <img src="http://localhost:3000/<%= activity[i].image_url %>" alt="<%= activity[i].name %>_<%= activity[i]._id %>" width="70px">
+                      </td>
+                      <td class="align-middle">
+                        <form action="/admin/item/<%= item_id %>/activity/<%= activity[i]._id %>?_method=DELETE" method="post">
+                          <button type="button" class="btn btn-warning btn-sm button-update" style="width: 80px;" data-toggle="modal" data-target="#edit-activity" data-id="<%= activity[i]._id %>" data-activityname="<%= activity[i].name %>" data-type="<%= activity[i].type %>" data-imageurl="<%= activity[i].image_url %>"><i class="fas fa-edit"></i> Ubah</button><br style="display: block; margin: 5px; content: '';">
+                          <button type="submit" class="btn btn-danger btn-sm" style="width: 80px;"><i class="fas fa-trash"></i> Hapus</button>
+                        </form>
+                      </td>
+                    </tr>
+                  <% } %>
                 </tbody>
               </table>
             </div>

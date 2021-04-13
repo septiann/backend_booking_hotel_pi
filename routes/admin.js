@@ -30,6 +30,10 @@ router.post('/item/add/feature', upload, adminController.addFeature)
 router.put('/item/update/feature', upload, adminController.editFeature)
 router.delete('/item/:item_id/feature/:id', adminController.deleteFeature)
 
+router.post('/item/add/activity', upload, adminController.addActivity)
+router.put('/item/update/activity', upload, adminController.editActivity)
+router.delete('/item/:item_id/activity/:id', adminController.deleteActivity)
+
 // Booking
 router.get('/booking', adminController.viewBooking)
 

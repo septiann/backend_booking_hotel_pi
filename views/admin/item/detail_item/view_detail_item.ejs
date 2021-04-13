@@ -84,6 +84,7 @@
   <!-- JavaScript File -->
   <%- include('../../../partials/js.ejs') %>
   <%- include('edit_feature.ejs') %>
+  <%- include('edit_activity.ejs') %>
   <!-- End of JavaScript File -->
 
   <script>
@@ -102,6 +103,19 @@
       $('#edit_feature_qty').val(qty);
       $('#edit_image').attr("src", "http://localhost:3000/"+image_url);
       $('#edit_image').attr("alt", feature_name+'_'+id);
+    });
+
+    $('#dataTableActivity').on('click', '.button-update', function() {
+      var id = $(this).data('id');
+      var activity_name = $(this).data('activityname');
+      var type = $(this).data('type');
+      var image_url = $(this).data('imageurl');
+
+      $('.id').val(id);
+      $('#edit_activity_name').val(activity_name);
+      $('#edit_activity_type').val(type);
+      $('#edit_image_activity').attr("src", "http://localhost:3000/"+image_url);
+      $('#edit_image_activity').attr("alt", activity_name+'_'+id);
     });
   </script>
 

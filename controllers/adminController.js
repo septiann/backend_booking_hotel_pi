@@ -328,13 +328,16 @@ module.exports = {
             const alertMessage = req.flash('alertMessage')
             const alertStatus = req.flash('alertStatus')
             const alert = { message: alertMessage, status: alertStatus }
+
             const feature = await Feature.find({ item_id: item_id })
+            const activity = await Activity.find({ item_id: item_id })
 
             res.render('admin/item/detail_item/view_detail_item', {
                 title: 'InnCation | Detail Item',
                 alert,
                 item_id,
-                feature
+                feature,
+                activity
             })
         } catch (error) {
             req.flash('alertMessage', `${error.message}`)
@@ -398,7 +401,7 @@ module.exports = {
     },
     deleteFeature: async (req, res) => {
         const { id, item_id } = req.params
-        console.log(id + ' ' + item_id)
+
         try {
             const feature = await Feature.findOne({ _id: id })
             const item = await (await Item.findOne({ _id: item_id })).populate('feature_id')
@@ -417,6 +420,85 @@ module.exports = {
             req.flash('alertStatus', 'success')
         } catch (error) {
             req.flash('alertMessage', `Gagal menghapus data fitur. ${error.message}`)
+            req.flash('alertStatus', 'danger')
+        }
+
+        res.redirect(`/admin/item/show-detail-item/${item_id}`)
+    },
+    addActivity: async (req, res) => {
+        const { activity_name, type, item_id } = req.body
+        try {
+            if(!req.file) {
+                req.flash('alertMessage', `Gambar tidak ditemukan. ${error.message}`)
+                req.flash('alertStatus', 'danger')
+            }
+
+            const activity = await Activity.create({
+                name: activity_name,
+                type,
+                item_id,
+                image_url: `images/${req.file.filename}`
+            })
+
+            const item = await Item.findOne({ _id: item_id })
+
+            item.activity_id.push({ _id: activity._id })
+            await item.save()
+
+            req.flash('alertMessage', 'Berhasil menambah aktifitas.')
+            req.flash('alertStatus', 'success')
+        } catch (error) {
+            req.flash('alertMessage', `Gagal menambah aktifitas. ${error.message}`)
+            req.flash('alertStatus', 'danger')
+        }
+
+        res.redirect(`/admin/item/show-detail-item/${item_id}`)
+    },
+    editActivity: async (req, res) => {
+        const { id, activity_name, type, item_id } = req.body
+        try {
+            const activity = await Activity.findOne({ _id: id })
+
+            activity.name = activity_name
+            activity.type = type
+
+            if(req.file !== undefined) {
+                await fs.unlink(path.join(`public/${activity.image_url}`))
+                activity.image_url = `images/${req.file.filename}`
+            }
+
+            await activity.save()
+
+            req.flash('alertMessage', 'Berhasil mengubah data aktifitas.')
+            req.flash('alertStatus', 'success')
+        } catch (error) {
+            req.flash('alertMessage', `Gagal mengubah data aktifitas. ${error.message}`)
+            req.flash('alertStatus', 'danger')
+        }
+
+        res.redirect(`/admin/item/show-detail-item/${item_id}`)
+    },
+    deleteActivity: async (req, res) => {
+        const { id, item_id } = req.params
+
+        try {
+            const activity = await Activity.findOne({ _id: id })
+            const item = await (await Item.findOne({ _id: item_id })).populate('activity_id')
+
+            for(let i = 0; i < item.activity_id.length; i++) {
+                if(item.activity_id[i]._id.toString() === activity._id.toString()) {
+                    item.activity_id.pull({ _id: activity._id })
+                    await item.save()
+                }
+            }
+            
+            await fs.unlink(path.join(`public/${activity.image_url}`))
+            await activity.remove()
+
+            req.flash('alertMessage', 'Berhasil menghapus data aktifitas.')
+            req.flash('alertStatus', 'success')
+        } catch (error) {
+            req.flash('alertMessage', `Gagal menghapus data aktifitas. ${error.message}`)
             req.flash('alertStatus', 'danger')
         }
 
