@@ -4,16 +4,82 @@ const Item = require('../models/Item')
 const Image = require('../models/Image')
 const Feature = require('../models/Feature')
 const Activity = require('../models/Activity')
+const User = require('../models/User')
 
 const fs = require('fs-extra')
 const path = require('path')
+const bcrypt = require('bcryptjs')
 
 module.exports = {
+    // Login dan Logout
+    viewLogin: async (req, res) => {
+        try {
+            const alertMessage = req.flash('alertMessage')
+            const alertStatus = req.flash('alertStatus')
+            const alert = { message: alertMessage, status: alertStatus }
+
+            if(req.session.user === null || req.session.user === undefined) {
+                res.render('index', {
+                    alert,
+                    title: 'InnCation | Login'
+                })
+            } else {
+                res.redirect('/admin/dashboard')
+            }
+
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`)
+            req.flash('alertStatus', 'danger')
+        }
+
+        res.redirect('/admin/login')
+    },
+    actionLogin: async (req, res) => {
+        try {
+            const { username, password } = req.body
+            
+            const user = await User.findOne({ username: username })
+            if(!user) {
+                req.flash('alertMessage', `Akun pengguna tidak ditemukan.`)
+                req.flash('alertStatus', 'danger')
+                
+                res.redirect('/admin/login')
+            }
+            
+            const isPasswordMatch = await bcrypt.compare(password, user.password)
+            if(!isPasswordMatch) {
+                req.flash('alertMessage', `Password yang Anda masukan salah.`)
+                req.flash('alertStatus', 'danger')
+
+                res.redirect('/admin/login')
+            }
+
+            req.session.user = {
+                id: user.id,
+                username: user.username
+            }
+
+            res.redirect('/admin/dashboard')
+        } catch (error) {
+            res.redirect('/admin/login')
+        }
+    },
+    actionLogout: (req, res) => {
+        req.session.destroy()
+        res.redirect('/admin/login')
+    },
+
     // Dashboard
     viewDashboard: (req, res) => {
-        res.render('admin/dashboard/view_dashboard', {
-            title: 'InnCation | Dashboard'
-        })
+        try {
+            res.render('admin/dashboard/view_dashboard', {
+                title: 'InnCation | Dashboard',
+                user: req.session.user
+            })
+            
+        } catch (error) {
+            
+        }
     },
 
     // Category
@@ -27,7 +93,8 @@ module.exports = {
             res.render('admin/category/view_category', {
                 category,
                 alert,
-                title: 'InnCation | Category'
+                title: 'InnCation | Category',
+                user: req.session.user
             })
         } catch (error) {
             req.flash('alertMessage', `${error.message}`)
@@ -96,7 +163,8 @@ module.exports = {
             res.render('admin/bank/view_bank', {
                 title: 'InnCation | Bank',
                 alert,
-                bank
+                bank,
+                user: req.session.user
             })
         } catch (error) {
             req.flash('alertMessage', `${error.message}`)
@@ -181,7 +249,8 @@ module.exports = {
                 category,
                 alert,
                 item,
-                action: 'view'
+                action: 'view',
+                user: req.session.user
             })
         } catch (error) {
             req.flash('alertMessage', `${error.message}`)
@@ -233,7 +302,8 @@ module.exports = {
                 title: "InnCation | Show Image Item",
                 alert,
                 item,
-                action: 'show image'
+                action: 'show image',
+                user: req.session.user
             })
         } catch (error) {
             req.flash('alertMessage', `${error.message}`)
@@ -256,7 +326,8 @@ module.exports = {
                 alert,
                 item,
                 category,
-                action: 'edit'
+                action: 'edit',
+                user: req.session.user
             })
         } catch (error) {
             req.flash('alertMessage', `${error.message}`)
@@ -337,7 +408,8 @@ module.exports = {
                 alert,
                 item_id,
                 feature,
-                activity
+                activity,
+                user: req.session.user
             })
         } catch (error) {
             req.flash('alertMessage', `${error.message}`)
@@ -508,7 +580,8 @@ module.exports = {
     // Booking
     viewBooking: (req, res) => {
         res.render('admin/booking/view_booking', {
-            title: 'InnCation | Booking Order'
+            title: 'InnCation | Booking Order',
+            user: req.session.user
         })
     }
 }

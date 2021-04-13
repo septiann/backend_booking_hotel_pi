@@ -10,48 +10,58 @@ const bookingSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    itemId: [{
+    invoice: {
+        type: String,
+        required: true
+    },
+    item_id: {
         _id: {
             type: ObjectId,
             ref: 'Item',
+            required: true
+        },
+        title: {
+            type: String,
             required: true
         },
         price: {
             type: Number,
             required: true
         },
-        night: {
+        duration: {
             type: Number,
             required: true
         }
-    }],
-    memberId: [{
+    },
+    total: {
+        type: Number,
+        required: true
+    },
+    member_id: {
         type: ObjectId,
         ref: 'Member'
-    }],
-    bankId: [{
+    },
+    bank_id: {
         type: ObjectId,
         ref: 'Bank'
-    }],
-    proofPayment: {
-        type: String,
-        required: true
     },
-    bankForm: {
-        type: String,
-        required: true
-    },
-    accountHolder: {
-        type: String,
-        required: true
-    },
-    imageUrl: {
-        type: String,
-        required: true
-    },
-    status: {
-        type: String,
-        required: true
+    payments: {
+        proofPayment: {
+            type: String,
+            required: true
+        },
+        bankFrom: {
+            type: String,
+            required: true
+        },
+        accountHolder: {
+            type: String,
+            required: true
+        },
+        status: {
+            type: String,
+            required: true
+        }
     }
 })
 
