@@ -19,7 +19,7 @@
               <tr>
                 <td class="align-middle"><%= i + 1 %></td>
                 <td class="align-middle"><%= item[i].title %></td>
-                <td class="align-middle">Rp. <%= item[i].price %></td>
+                <td class="align-middle">Rp. <%= item[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></td>
                 <td class="align-middle"><%= item[i].city %></td>
                 <td class="align-middle"><%= item[i].country %></td>
                 <td class="align-middle">

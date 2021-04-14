@@ -1,8 +1,5 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-    </div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -12,10 +9,36 @@
               <th>Date</th>
               <th>Title</th>
               <th>Member Name</th>
+              <th>Bank Account</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
+          <tbody>
+            <% for(let i = 0; i < booking.length; i++) { %>
+              <tr>
+                <td class="align-middle"><%= i + 1 %>.</td>
+                <td class="align-middle"><%= booking[i].bookingStartDate.toLocaleString().split(',')[0] %> - <%= booking[i].bookingEndDate.toLocaleString().split(',')[0] %></td>
+                <td class="align-middle"><%= booking[i].item_id.title %></td>
+                <td class="align-middle"><%= booking[i].member_id.firstName %>&nbsp;<%= booking[i].member_id.lastName %></td>
+                <td class="align-middle"><%= booking[i].bank_id.bank_name %></td>
+                <td class="align-middle">
+                  <% if(booking[i].payments.status == 'Diproses') { %>
+                    <div class="btn btn-warning btn-sm" style="width: 80px;">
+                  <% } else if(booking[i].payments.status == 'Disetujui') { %>
+                    <div class="btn btn-success btn-sm" style="width: 80px;">
+                  <% } else { %>
+                    <div class="btn btn-danger btn-sm" style="width: 80px;">
+                  <% } %>
+                    <%= booking[i].payments.status %>
+                  </div>
+                </td>
+                <td class="align-middle">
+                  <a href="/admin/booking/<%= booking[i]._id %>" class="btn btn-success btn-sm" style="width: 80px;"><i class="fas fa-eye"></i> Detail</a>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
         </table>
       </div>
     </div>
