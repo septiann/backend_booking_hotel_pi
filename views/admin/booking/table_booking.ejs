@@ -6,22 +6,22 @@
           <thead>
             <tr>
               <th>No.</th>
-              <th>Date</th>
+              <th>No. Pemesanan</th>
+              <th>Tanggal</th>
               <th>Title</th>
-              <th>Member Name</th>
-              <th>Bank Account</th>
+              <th>Nama Member</th>
               <th>Status</th>
-              <th>Action</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
             <% for(let i = 0; i < booking.length; i++) { %>
               <tr>
                 <td class="align-middle"><%= i + 1 %>.</td>
+                <td class="align-middle">#<%= booking[i].invoice %></td>
                 <td class="align-middle"><%= booking[i].bookingStartDate.toLocaleString().split(',')[0] %> - <%= booking[i].bookingEndDate.toLocaleString().split(',')[0] %></td>
                 <td class="align-middle"><%= booking[i].item_id.title %></td>
                 <td class="align-middle"><%= booking[i].member_id.firstName %>&nbsp;<%= booking[i].member_id.lastName %></td>
-                <td class="align-middle"><%= booking[i].bank_id.bank_name %></td>
                 <td class="align-middle">
                   <% if(booking[i].payments.status == 'Diproses') { %>
                     <div class="btn btn-warning btn-sm" style="width: 80px;">
