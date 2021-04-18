@@ -43,7 +43,7 @@
                       <td class="align-middle"><%= activity[i].name %></td>
                       <td class="align-middle"><%= activity[i].type %></td>
                       <td class="align-middle">
-                        <img src="http://localhost:3000/<%= activity[i].image_url %>" alt="<%= activity[i].name %>_<%= activity[i]._id %>" width="70px">
+                        <img src="https://backend-inncation.herokuapp.com/<%= activity[i].image_url %>" alt="<%= activity[i].name %>_<%= activity[i]._id %>" width="70px">
                       </td>
                       <td class="align-middle">
                         <form action="/admin/item/<%= item_id %>/activity/<%= activity[i]._id %>?_method=DELETE" method="post">

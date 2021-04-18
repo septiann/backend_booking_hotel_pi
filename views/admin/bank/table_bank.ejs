@@ -26,7 +26,7 @@
                 <td class="align-middle"><%= bank[i].account_number %></td>
                 <td class="align-middle"><%= bank[i].account_name %></td>
                 <td>
-                  <img src="http://localhost:3000/<%= bank[i].image_url %>" alt="<%= bank[i].bank_name %>" width="70px">
+                  <img src="https://backend-inncation.herokuapp.com/<%= bank[i].image_url %>" alt="<%= bank[i].bank_name %>" width="70px">
                 </td>
                 <td class="align-middle">
                   <form action="/admin/bank/<%= bank[i]._id %>?_method=DELETE" method="post">

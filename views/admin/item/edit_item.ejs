@@ -27,7 +27,7 @@
             <label for="image">Gambar</label>
             <input type="file" class="form-control-file" name="image" id="image" multiple><br>
             <% for(let z = 0; z < item.image_id.length; z++) { %>
-              <img src="http://localhost:3000/<%= item.image_id[z].image_url %>" alt="<%= item.image_id[z]._id %>" width="150px">
+              <img src="https://backend-inncation.herokuapp.com/<%= item.image_id[z].image_url %>" alt="<%= item.image_id[z]._id %>" width="150px">
             <% } %>
           </div>
           <div class="form-group">

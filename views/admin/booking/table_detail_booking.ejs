@@ -5,7 +5,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-4">
-        <img src="http://localhost:3000/<%= booking.payments.proofPayment %>" alt="" style="width: 100%; display: block;"><hr>
+        <img src="https://backend-inncation.herokuapp.com/<%= booking.payments.proofPayment %>" alt="" style="width: 100%; display: block;"><hr>
         <% if(booking.payments.status !== 'Disetujui') { %>
         <form action="/admin/booking/<%= booking._id %>/confirmation?_method=PUT" method="post" style="display: inline-block;">
           <button type="submit" class="btn btn-success btn-sm" style="width: auto;"><i class="fas fa-check"></i> Konfirmasi</button>
