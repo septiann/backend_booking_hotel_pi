@@ -6,6 +6,7 @@ var logger = require('morgan');
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
+const cors = require('cors')
 
 // import mongoose
 const mongoose = require('mongoose')
@@ -46,6 +47,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/sb-admin-2', express.static(path.join(__dirname, 'node_modules/startbootstrap-sb-admin-2')))
+app.use(cors())
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
