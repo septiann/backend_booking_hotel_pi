@@ -33,11 +33,11 @@ module.exports = {
             const testimonial = {
                 _id: "asd1293uasdads1",
                 image_url: "images/testimonial-landingpage.jpg",
-                name: "Keluarga Bahagia",
+                name: "Best Staycation Ever",
                 rate: 4.55,
-                content: "Perjalanan hiburan yang sangat hebat dengan keluarga, dan mungkin saya akan coba lagi lain waktu..",
-                family_name: "Septian Nugraha",
-                family_occupation: "Back-End Developer"
+                content: "Pengalaman liburan yang sangat hebat bersama teman, dan mungkin saya akan coba lagi lain waktu..",
+                family_name: "Raisa Adriana",
+                family_occupation: "Aktris"
             }
 
             for(let i = 0; i < category.length; i++) {
