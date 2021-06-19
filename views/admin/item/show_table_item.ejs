@@ -7,10 +7,9 @@
           <thead>
             <tr>
               <th>No.</th>
-              <th>Nama Kategori</th>
+              <th>Nama Hotel</th>
               <th>Harga</th>
               <th>Kota</th>
-              <th>Negara</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -21,7 +20,6 @@
                 <td class="align-middle"><%= item[i].title %></td>
                 <td class="align-middle">Rp. <%= item[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") %></td>
                 <td class="align-middle"><%= item[i].city %></td>
-                <td class="align-middle"><%= item[i].country %></td>
                 <td class="align-middle">
                   <form action="/admin/item/<%= item[i]._id %>/delete?_method=DELETE" method="post">
                     <a href="/admin/item/show-image/<%= item[i]._id %>" class="btn btn-info btn-sm" style="width: 90px;"><i class="fas fa-image"></i> Foto</a>
